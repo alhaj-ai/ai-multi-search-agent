@@ -1,0 +1,14 @@
+[project]
+name = "ai-multi-search-agent"
+version = "0.1.0"
+description = "Multi-source search and synthesis agent orchestrating Google, Bing, and Reddit via LangGraph and BrightData SERP APIs."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "langchain>=0.3.27",
+    "langchain-openai>=0.3.35",
+    "langgraph>=0.6.10",
+    "python-dotenv>=1.1.1",
+    "requests>=2.31.0",
+    "streamlit>=1.50.0",
+]
