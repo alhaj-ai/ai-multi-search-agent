@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  verify:
+    name: LangGraph 9-Node Pipeline Verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - name: Verify Module Compilation & LangGraph Topology
+        run: |
+          python -m py_compile main.py streamlit.py web_operations.py snapshot_operations.py prompts.py
+          python -c "from main import graph; nodes = set(graph.nodes.keys()); expected = {'google_search', 'bing_search', 'reddit_search', 'analyze_reddit_posts', 'retrieve_reddit_posts', 'analyze_google_results', 'analyze_bing_results', 'analyze_reddit_results', 'synthesize_analyses'}; assert expected.issubset(nodes), f'Missing nodes: {expected - nodes}'; print('Verified 9-node LangGraph topology successfully!')"
